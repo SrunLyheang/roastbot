@@ -1,0 +1,8 @@
+# Real API keys live here — never commit
+config.py
+
+# Local database, recreated automatically on startup
+roastbot.db
+
+__pycache__/
+.venv/
