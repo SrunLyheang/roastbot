@@ -827,7 +827,17 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == "__main__":
     print("starting roast bot...")
     init_db()
-    app = Application.builder().token(TOKEN).build()
+    app = (
+        Application.builder()
+        .token(TOKEN)
+        .post_init(on_startup)    # announce "online" once the bot is ready
+        .post_stop(on_shutdown)   # announce "offline" on Ctrl+C / graceful stop
+        .build()
+    )
+
+    # Runs first for EVERY update (group=-1) purely to record which chats exist.
+    # It doesn't consume the update, so the handlers below still run normally.
+    app.add_handler(TypeHandler(Update, track_chat), group=-1)
 
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("help", help_command))
