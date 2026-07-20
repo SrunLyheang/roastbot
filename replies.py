@@ -87,6 +87,61 @@ KEYWORD_REPLIES = {
         "The only thing that loves you back is your phone's low-battery warning 🔋💀",
         "Love? Your situationship left you on 'delivered' and so did life 🔥",
     ],
+        "thirak": [
+        "The only thing that loves thirak back is thirak's phone's low-battery warning 🔋💀",
+        "Only thing cool about him is his hair.",
+
+    ],
+    "sleep": [
+
+    "You've been resting your whole life and you're still tired. 😴💀",
+
+    "Sleep is the only thing you've ever been committed to. 🔥",
+
+    "Your alarm clock deserves hazard pay. 😭",
+
+    ],
+    "tak": [
+    "Tak's only consistent achievement is disappointing everyone's expectations, including his own. 💀",
+    "Tak's loading screen has a loading screen. 🔥",
+    ],
+    "sakk": [
+    "Sakk has two brain cells, and they're both on annual leave. 💀",
+    "Sakk could lose a race against a Windows update. 🔥",
+    ], 
+    "panha": [
+    "Panha volunteers to lead every project just to watch everyone else do the work. 💀",
+    "Panha could complicate boiling water. 🔥",
+    ],
+
+    "sereyroth": [
+    "Sereyroth speaks with so much confidence you'd think being wrong was a profession. 💀",
+    "Sereyroth argues with Google and still loses. 🔥",
+    ],
+
+    "rithy": [
+    "Rithy says 'trust me' like that's ever worked out for anyone. 💀",
+    "Rithy's ETA is always '5 minutes' no matter what year it is. 🔥",
+    ],
+
+    "menghor": [
+    "Menghor's life is just one long beta test with no stable release. 💀",
+    "Menghor starts everything except finishing it. 🔥",
+    ],
+
+    "kimmeng": [
+    "Kimmeng acts like the main character, but he's barely an extra. 💀",
+    "Kimmeng has 4K confidence and 144p results. 🔥",
+    ],
+
+    "rith": [
+    "Rith disappears so often the milk in his fridge knows him less than we do. 💀",
+    "Rith replies so late the conversation already graduated. 🔥",
+    ],
+    "lyheang": [
+    "You can't be serious? Thinking about roasting the owner of this bot!"
+    ]
+
 }
 
 # Sent when a chat is roasting faster than the cooldown allows.

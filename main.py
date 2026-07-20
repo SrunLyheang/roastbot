@@ -47,14 +47,13 @@ from config import (
 )
 from replies import KEYWORD_REPLIES, COOLDOWN_LINES, FALLBACK_ROASTS
 
-# ---------- 1. Constants ----------
+# 1. Constants
 TOKEN: Final = TELEGRAM_TOKEN
-# Fill this in after BotFather gives you the real @name (keep the @).
-BOT_USERNAME: Final = "@YourRoastBot"
+BOT_USERNAME: Final = "@Roastthegroup_bot"
 DB_PATH: Final = "roastbot.db"
 
-MAX_STORED_MSGS: Final = 30   # how many recent messages we keep per person per chat
-COOLDOWN_SECONDS: Final = 15  # one roast per chat per this many seconds
+MAX_STORED_MSGS: Final = 10   # how many recent messages we keep per person per chat
+COOLDOWN_SECONDS: Final = 7  # one roast per chat per this many seconds
 BATTLE_TIMEOUT: Final = 300   # a /battle auto-expires after 5 minutes of silence
 
 if not TOKEN or "paste_your" in TOKEN:
@@ -82,9 +81,7 @@ def db() -> sqlite3.Connection:
 def init_db() -> None:
     """Create the tables if they don't exist. Safe to call every startup."""
     conn = db()
-    # Everything is scoped by chat_id (like the todo bot): a private DM has its
-    # own chat_id, and a group shares one chat_id — so 'this chat' is always the
-    # right unit for both memory and the leaderboard.
+
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS messages (
@@ -130,18 +127,18 @@ def remember_message(chat_id: int, user, text: str) -> None:
     conn = db()
     conn.execute(
         """INSERT INTO messages (chat_id, user_id, username, first_name, text, created_at)
-           VALUES (?, ?, ?, ?, ?, ?)""",
+        VALUES (?, ?, ?, ?, ?, ?)""",
         (chat_id, user.id, user.username, user.first_name, text,
-         datetime.now().isoformat()),
+        datetime.now().isoformat()),
     )
     # Delete everything for this person in this chat EXCEPT their 30 newest rows.
     conn.execute(
         """DELETE FROM messages
-           WHERE chat_id = ? AND user_id = ? AND id NOT IN (
-               SELECT id FROM messages
-               WHERE chat_id = ? AND user_id = ?
-               ORDER BY id DESC LIMIT ?
-           )""",
+        WHERE chat_id = ? AND user_id = ? AND id NOT IN (
+            SELECT id FROM messages
+            WHERE chat_id = ? AND user_id = ?
+            ORDER BY id DESC LIMIT ?
+        )""",
         (chat_id, user.id, chat_id, user.id, MAX_STORED_MSGS),
     )
     conn.commit()
@@ -351,11 +348,10 @@ def ask_ai(system: str, user: str) -> Optional[str]:
 ROAST_SYSTEM: Final = (
     "You are RoastBot, a merciless stand-up roast comedian in a group chat. "
     "Your job is to absolutely COOK the target — brutal, savage, no mercy, no "
-    "softening, no compliments. Be clever and specific, not just mean. "
+    "softening, no compliments.  "
     "Rules: 1-3 short punchy sentences max. Add one or two emojis like 💀🔥😭. "
     "Reply in the SAME language the target uses (English, Khmer, or a mix — match them). "
-    "Never use slurs, hate speech, or attacks on race, religion, gender, sexuality, "
-    "or disability. Attack their vibe, choices, and words instead. Output ONLY the "
+    " Output ONLY the "
     "roast, nothing else."
 )
 
@@ -461,7 +457,7 @@ async def _do_roast(update, chat_id, target_user_id, target_name, username, ammo
     """Shared roast-and-send used by /roast, /roastme, and the message handler."""
     prompt = build_roast_user_prompt(target_name, username, ammo)
     roast = await run_with_typing(update.effective_chat, roast_or_fallback,
-                                  ROAST_SYSTEM, prompt)
+                                ROAST_SYSTEM, prompt)
     log_roast(chat_id, target_user_id, target_name or (username or "someone"))
     await update.message.reply_text(roast)
 
@@ -662,7 +658,7 @@ VERSUS_SYSTEM: Final = (
     "chat. Write a brutal, savage roast of EACH person (1-2 sentences each) using "
     "the ammo provided, then declare a winner — the one you roasted harder or who's "
     "the bigger disaster. Use emojis like 🥊🔥💀🏆, keep it under 6 lines total. "
-    "Match the language they use. No slurs or hate speech. "
+    "Match the language they use. "
     "Format: name, their roast, then the next name, then the winner."
 )
 
