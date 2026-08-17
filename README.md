@@ -1,3 +1,5 @@
+
+
 # RoastBot 💀🔥
 
 A Telegram bot that roasts people. Add it to a group and it cooks your friends
@@ -57,3 +59,5 @@ Leave the terminal open — the bot only works while this is running.
   it any time you want to wipe all memory and leaderboards.
 - Never commit `config.py` — it's gitignored (it holds your keys).
 - Hardcoded replies live in `replies.py` — add your own jokes there.
+
+This is a bot for me to add to my group chats and mess around while also learn along the way.
